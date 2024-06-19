@@ -1,0 +1,67 @@
+<div class="flex justify-between">
+  <div
+    class="flex items-center justify-center py-1 text-center rounded-lg focus:outline-none"
+  >
+    <span class="self-center text-sm font-medium"
+      >Seleccione con el puntero el lugar donde estampará la firma</span
+    >
+  </div>
+  <div class="flex hidden md:block md:flex">
+    <span class="self-center text-sm font-medium">Nª Página</span>
+    <div class="flex flex-row border h-8 w-22 rounded-lg mx-3 relative">
+      <button
+        class="font-semibold border-r bg-slate-200 hover:bg-slate-100 w-10 flex rounded-l focus:outline-none cursor-pointer"
+      >
+        <span class="m-auto"><</span>
+      </button>
+      <input
+        class="w-9 p-1 text-xs focus:outline-none text-center"
+        [value]="currentPage"
+        [max]="totalPages"
+      />
+
+      <button
+        class="font-semibold border-l bg-slate-200 hover:bg-slate-100 h-full w-10 flex rounded-r focus:outline-none cursor-pointer"
+      >
+        <span class="m-auto font-bold">></span>
+      </button>
+    </div>
+
+    <span class="self-center text-sm font-medium">/ {{ totalPages }}</span>
+  </div>
+  <button
+    type="button"
+    class="flex items-center justify-center px-6 py-1 ml-2 text-center bg-gray-100 border border-gray-400 rounded-lg md:hidden focus:outline-none hover:bg-gray-300"
+  >
+    <svg
+      class="w-5 h-5 text-gray-700 fill-current"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z"
+      ></path>
+    </svg>
+  </button>
+</div>
+<div
+  class="flex justify-between mt-2 px-4 py-2 bg-indigo-100 border border-indigo-200 rounded-t-lg"
+>
+  <div class="flex items-center">
+    <img
+      class="w-6 h-6 mr-2 rounded-md"
+      src="https://avatars3.githubusercontent.com/in/2141?s=60&v=4"
+      alt=""
+    />
+    <p class="text-sm font-semibold">
+      Visualizador PDF para estampado de firma
+    </p>
+  </div>
+</div>
+<div
+  class="mx-auto w-full max-w-full bg-white border-b border-l border-r border-indigo-200"
+>
+  <div class="pdf-container">
+    <canvas #pdfCanvas></canvas>
+  </div>
+</div>
