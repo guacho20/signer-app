@@ -15,59 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 export default class ValidationComponent {
   private _firmaEcService = inject(FirmaecService);
   private _toastr = inject(ToastrService);
-  signer: FirmaValido = {
-    firmasValidas: true,
-    integridadDocumento: true,
-    error: 'null',
-    certificado: [
-      {
-        emitidoPara: 'CRISTIAN RAFAEL VEGA TOCTAGUANO',
-        emitidoPor: 'UANATACA S.A.',
-        validoDesde: '2023-12-08 15:35:00',
-        validoHasta: '2024-12-07 15:35:00',
-        fechaFirma: '2024-06-18 10:17:53',
-        fechaRevocado: '',
-        certificadoVigente: true,
-        clavesUso: 'Firma Electrónica, No Repudio, Cifrado de llave, ',
-        fechaSelloTiempo: '',
-        integridadFirma: true,
-        razonFirma: '',
-        localizacion: '',
-        cedula: '0503733222',
-        nombre: 'CRISTIAN RAFAEL',
-        apellido: 'VEGA TOCTAGUANO',
-        institucion: '',
-        cargo: '',
-        entidadCertificadora: 'UANATACA S.A.',
-        serial: '3460807496926773959',
-        selladoTiempo: false,
-        certificadoDigitalValido: true,
-      },
-      {
-        emitidoPara: 'VICTORIA MARICELA MINTA MARTINEZ',
-        emitidoPor: 'UANATACA S.A.',
-        validoDesde: '2024-02-29 07:21:00',
-        validoHasta: '2025-02-28 07:21:00',
-        fechaFirma: '2024-06-22 14:50:30',
-        fechaRevocado: '',
-        certificadoVigente: true,
-        clavesUso: 'Firma Electrónica, No Repudio, Cifrado de llave, ',
-        fechaSelloTiempo: '',
-        integridadFirma: true,
-        razonFirma: '',
-        localizacion: '',
-        cedula: '1750309773',
-        nombre: 'VICTORIA MARICELA',
-        apellido: 'MINTA MARTINEZ',
-        institucion: '',
-        cargo: '',
-        entidadCertificadora: 'UANATACA S.A.',
-        serial: '2483521304851754760',
-        selladoTiempo: false,
-        certificadoDigitalValido: true,
-      },
-    ],
-  };
+  signer!: FirmaValido;
   base64!: string | undefined;
   isLoading = false;
 
