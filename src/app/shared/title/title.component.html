@@ -1,0 +1,9 @@
+<div class="w-full mb-2 p-4 bg-white rounded-t-lg shadow">
+  <div class="text-center">
+    <h2 class="text-2xl font-bold text-gray-900">{{ label }}</h2>
+    <p class="mt-1 text-gray-500" *ngIf="description">
+      {{ description }}
+    </p>
+  </div>
+  <ng-content></ng-content>
+</div>

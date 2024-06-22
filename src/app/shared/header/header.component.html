@@ -4,12 +4,13 @@
   </div>
 
   <!--  -->
-  <div class="flex items-center justify-center px-10">
+  <div class="flex items-center justify-center px-10 mt-2">
     <div class="flex text-sm">
       @for (item of menus; track $index) {
       <div
         [routerLink]="item.link"
         routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: item.exact ? item.exact : false }"
         class="flex items-center px-4 pb-2 cursor-pointer"
       >
         <svg

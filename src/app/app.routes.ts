@@ -6,9 +6,9 @@ export const routes: Routes = [
     path: 'validation',
     loadComponent: () => import('./pages/validation/validation.component'),
   },
-  {
+  /* {
     path: 'advanced-validation',
     loadComponent: () =>
       import('./pages/advanced-validation/advanced-validation.component'),
-  },
+  }, */
 ];

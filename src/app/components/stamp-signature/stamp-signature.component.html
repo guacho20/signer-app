@@ -1,4 +1,6 @@
-<div class="flex justify-between mx-2">
+<div
+  class="flex justify-between px-2 py-1 border border-[#0d4798]/30 rounded-t-lg border-b-0"
+>
   <div
     class="flex items-center justify-center py-1 text-center rounded-lg focus:outline-none"
   >
@@ -8,16 +10,30 @@
   </div>
   <div class="hidden md:flex">
     <span class="self-center text-xs">Nª Página</span>
-    <div class="flex flex-row border h-8 w-22 rounded-lg mx-2">
+    <div class="flex flex-row h-6 mx-2 border-gray-950">
       <button
         [disabled]="currentPage <= 1"
         (click)="goToPreviousPage()"
-        class="border-r bg-slate-200 text-xs hover:bg-slate-100 w-6 flex rounded-l focus:outline-none cursor-pointer"
+        class="rounded-l btn-icon flex items-center justify-center"
       >
-        <span class="m-auto"><</span>
+        <svg
+          class="w-2 h-2 rtl:rotate-180 text-gray-600"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 6 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 1 1 5l4 4"
+          />
+        </svg>
       </button>
       <input
-        class="w-9 p-1 text-xs focus:outline-none text-center"
+        class="w-9 p-1 h-6 rounded-none border text-xs focus:outline-none text-center"
         [value]="currentPage"
         [max]="totalPages"
       />
@@ -25,9 +41,23 @@
       <button
         (click)="goToNextPage()"
         [disabled]="currentPage >= totalPages"
-        class="border-l bg-slate-200 hover:bg-slate-100 h-full text-xs w-6 flex rounded-r focus:outline-none cursor-pointer"
+        class="rounded-r btn-icon flex items-center justify-center"
       >
-        <span class="m-auto">></span>
+        <svg
+          class="w-2 h-2 rtl:rotate-180 text-gray-600"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 6 10"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m1 9 4-4-4-4"
+          />
+        </svg>
       </button>
     </div>
 
@@ -35,7 +65,7 @@
   </div>
 </div>
 <div
-  class="flex justify-between mt-2 px-4 py-2 bg-indigo-100 border border-indigo-200 rounded-t-lg"
+  class="flex justify-between px-4 py-2 bg-[#0d4798]/10 border border-[#0d4798]/30"
 >
   <div class="flex items-center">
     <img class="w-6 h-6 mr-2 rounded-md" src="bot.png" alt="" />
@@ -45,29 +75,32 @@
   </div>
 </div>
 <div
-  class="mx-auto w-full max-w-full bg-white border-b border-l border-r border-indigo-200"
+  class="mx-auto w-full max-w-full bg-white border-b border-l border-r border-[#0d4798]/30"
 >
-  <!-- <div class="pdf-container" #pdfContainer>
+  <div class="pdf-container">
     <canvas #pdfCanvas (click)="onCanvasClick($event)"></canvas>
-  </div> -->
 
-  <div class="canvas-container">
-    <canvas
-      #pdfCanvas
-      class="pdf-canvas"
-      (click)="onCanvasClick($event)"
-    ></canvas>
-    <div
-      *ngIf="currentPosition"
-      class="indicator-container"
-      [style.left.px]="currentPosition.x"
-      [style.top.px]="currentPosition.y"
-    >
+    <div class="indicator-overlay">
       <img
-        src="https://services.abitmedia.cloud/images/estampar_aqui.png"
-        alt="Indicador"
+        #indicatorImage
+        *ngIf="lastIndicatorPosition"
+        [src]="'estampar.png'"
         class="indicator-image"
+        [style.left.px]="lastIndicatorPosition.x"
+        [style.top.px]="lastIndicatorPosition.y"
       />
     </div>
   </div>
+  <div *ngIf="showWarningMessage" class="warning-message">
+    No puede colocar la imagen fuera del canvas.
+  </div>
+  <!--  <canvas #pdfCanvas (click)="onCanvasClick($event)"></canvas>
+  <div class="indicator-overlay" *ngIf="lastIndicatorPosition">
+    <img
+      [src]="'estampar.png'"
+      class="indicator-image"
+      [style.left.px]="lastIndicatorPosition.x"
+      [style.top.px]="lastIndicatorPosition.y"
+    />
+  </div> -->
 </div>

@@ -1,1 +1,184 @@
-<p>validation works!</p>
+<div class="flex min-w-0 flex-auto flex-col items-center">
+  <div class="w-full max-w-xl">
+    <app-title
+      label="Validar firma digital PDF"
+      description="Puedes comprobar la validez de la firma digital de un documento PDF que tengas en tu poder"
+    />
+    <div class="mt-2 space-y-3 w-full p-4 bg-white shadow">
+      <div class="grid grid-cols-1">
+        <label class="font-semibold text-gray-500 text-sm mb-1"
+          >Cargar Documento</label
+        >
+        <app-upload label="Seleccionar PDF" (onUpload)="upload($event)" />
+        <div class="w-full text-xs text-slate-400">
+          -Se pueden procesar archivos de hasta 50MB
+        </div>
+      </div>
+
+      <button
+        [disabled]="isLoading"
+        (click)="validatePDF()"
+        type="button"
+        class="flex justify-center items-center btn-primary mt-2"
+      >
+        @if (isLoading) {
+        <svg
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="mr-2 animate-spin"
+          viewBox="0 0 1792 1792"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M526 1394q0 53-37.5 90.5t-90.5 37.5q-52 0-90-38t-38-90q0-53 37.5-90.5t90.5-37.5 90.5 37.5 37.5 90.5zm498 206q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-704-704q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm1202 498q0 52-38 90t-90 38q-53 0-90.5-37.5t-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-964-996q0 66-47 113t-113 47-113-47-47-113 47-113 113-47 113 47 47 113zm1170 498q0 53-37.5 90.5t-90.5 37.5-90.5-37.5-37.5-90.5 37.5-90.5 90.5-37.5 90.5 37.5 37.5 90.5zm-640-704q0 80-56 136t-136 56-136-56-56-136 56-136 136-56 136 56 56 136zm530 206q0 93-66 158.5t-158 65.5q-93 0-158.5-65.5t-65.5-158.5q0-92 65.5-158t158.5-66q92 0 158 66t66 158z"
+          ></path>
+        </svg>
+        }@else{
+        <span> Validar PDF </span>
+        }
+      </button>
+      <div class="p-4 flex space-x-4">
+        <a
+          href="#"
+          class="w-1/2 px-4 py-3 text-center bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-black font-bold rounded-lg text-sm"
+          >Cancel</a
+        >
+        <a
+          href="#"
+          class="w-1/2 px-4 py-3 text-center text-pink-100 bg-pink-600 rounded-lg hover:bg-pink-700 hover:text-white font-bold text-sm"
+          >Delete Feelings</a
+        >
+      </div>
+    </div>
+    @if(signer){
+    <div class="mt-2 w-full p-4 bg-white rounded-b-lg shadow">
+      @if(!signer.certificado){
+      <h2 class="text-lg font-bold text-red-600 text-center">
+        {{ signer.error }}
+      </h2>
+      }@else {
+      <h2 class="text-lg font-bold text-green-600 text-center">
+        {{ "El documento tiene " + signer.certificado.length + " firmas" }}
+      </h2>
+      }
+      <!-- <div class="text-center">
+        <h2 class="text-lg font-bold text-[#00AA38]">
+          {{
+            signer.error.trim()
+              ? signer.error
+              : "Documento tiene " + signer?.certificado?.length + " firmas"
+          }}
+        </h2>
+      </div> -->
+      @for (item of signer.certificado; track $index; let i = $index) {
+      <div
+        class="group flex flex-col gap-0 rounded px-3 py-1 border mt-2"
+        [tabindex]="i + 1"
+        (click)="toggle(i + 1)"
+      >
+        <div class="flex cursor-pointer items-center justify-between">
+          <span class="text-[#0d4798] font-medium text-sm">
+            FIRMADO POR {{ item.nombre }} {{ item.apellido }}
+          </span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke-width="2"
+            stroke="currentColor"
+            class="size-5 shrink-0 transition"
+            aria-hidden="true"
+            class="h-4 w-6 transition-all duration-500 text-[#0d4798]"
+            [class.-rotate-180]="activeIndex === i + 1"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+            />
+          </svg>
+        </div>
+        <div
+          (click)="$event.stopPropagation()"
+          class="overflow-hidden transition-all duration-1000 border-t mt-1 py-2"
+          [class.max-h-0]="activeIndex !== i + 1"
+          [class.hidden]="activeIndex !== i + 1"
+          [class.max-h-screen]="activeIndex === i + 1"
+          [class.opacity-0]="activeIndex !== i + 1"
+          [class.opacity-100]="activeIndex === i + 1"
+        >
+          <table class="items-center w-full border-collapse">
+            <thead class="bg-gray-200 border-gray-200 p-1">
+              <tr class="">
+                <th
+                  colspan="2"
+                  class="rounded-t text-sm text-center font-medium"
+                >
+                  Información de la firma
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="w-[30%] font-medium">Estado de la firma</td>
+                <td>
+                  {{ item.certificadoDigitalValido ? "Válida" : "Invalida" }}
+                </td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Fecha y hora</td>
+                <td>{{ item.fechaFirma }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Cedula</td>
+                <td>{{ item.cedula }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Nombres</td>
+                <td>{{ item.nombre }} {{ item.apellido }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Razón de firma</td>
+                <td>{{ item.razonFirma ? item.razonFirma : "-" }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="items-center w-full border-collapse mt-4">
+            <thead class="bg-gray-200 border-gray-200 p-1">
+              <tr class="">
+                <th
+                  colspan="2"
+                  class="rounded-t text-sm text-center font-medium"
+                >
+                  Información del certificado
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="w-[30%] font-medium">Número de serie</td>
+                <td>{{ item.serial }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Entidad certificadora</td>
+                <td>{{ item.emitidoPor }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Válido desde</td>
+                <td>{{ item.validoDesde }}</td>
+              </tr>
+              <tr>
+                <td class="w-[30%] font-medium">Válido hasta</td>
+                <td>{{ item.validoHasta }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      }
+    </div>
+    }
+  </div>
+</div>

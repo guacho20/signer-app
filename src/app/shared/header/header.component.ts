@@ -9,8 +9,8 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class HeaderComponent {
   menus = [
-    { name: 'Firmar documento', link: '/' },
+    { name: 'Firmar documento', link: '/', exact: true },
     { name: 'Validar documento', link: 'validation' },
-    { name: 'Validar documento avanzado', link: 'advanced-validation' },
+    /*  { name: 'Validar documento avanzado', link: 'advanced-validation' }, */
   ];
 }

@@ -1,0 +1,64 @@
+@if (file) {
+<div class="rounded-md border-[#0d4798] bg-slate-200 px-3 py-2 border">
+  <div class="flex items-center justify-between">
+    <span class="pr-4 text-xs">
+      {{ file.name }}
+    </span>
+    <button
+      type="button"
+      (click)="clear()"
+      class="p-2 group hover:rounded-full text-center align-middle font-sans text-xs font-bold uppercase transition-all e hover:bg-red-600/90"
+    >
+      <svg
+        class="text-gray-500 group-hover:text-white"
+        width="10"
+        height="10"
+        viewBox="0 0 10 10"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.279337 0.279338C0.651787 -0.0931121 1.25565 -0.0931121 1.6281 0.279338L9.72066 8.3719C10.0931 8.74435 10.0931 9.34821 9.72066 9.72066C9.34821 10.0931 8.74435 10.0931 8.3719 9.72066L0.279337 1.6281C-0.0931125 1.25565 -0.0931125 0.651788 0.279337 0.279338Z"
+          fill="currentColor"
+        />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M0.279337 9.72066C-0.0931125 9.34821 -0.0931125 8.74435 0.279337 8.3719L8.3719 0.279338C8.74435 -0.0931127 9.34821 -0.0931123 9.72066 0.279338C10.0931 0.651787 10.0931 1.25565 9.72066 1.6281L1.6281 9.72066C1.25565 10.0931 0.651787 10.0931 0.279337 9.72066Z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+  </div>
+</div>
+}@else{
+<div class="flex items-center justify-center w-full">
+  <label
+    class="group w-full border-[#0d4798] border border-dashed x-auto rounded p-4 bg-white hover:bg-[#0d4798] flex-col flex items-center justify-center"
+  >
+    <svg
+      class="w-6 h-6 text-gray-500 group-hover:text-white"
+      fill="currentColor"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 20 20"
+    >
+      <path
+        d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z"
+      />
+    </svg>
+    <h3 class="text-gray-700 font-bold group-hover:text-white text-xs">
+      {{ label }}
+    </h3>
+    <input
+      type="file"
+      #inputFile
+      class="hidden"
+      accept=".pdf"
+      size="5250000"
+      (change)="upload($event)"
+    />
+  </label>
+</div>
+}

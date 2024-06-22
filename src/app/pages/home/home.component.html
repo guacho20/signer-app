@@ -1,89 +1,81 @@
 <div class="flex min-w-0 flex-auto flex-col items-center">
-  @if (canSigner) {
-  <div class="w-full max-w-3xl">
-    <div class="w-full mb-2 p-4 bg-white rounded-t-lg">
-      <div class="text-center">
-        <h2 class="text-3xl font-bold text-gray-900">Firmar documento</h2>
-        <p class="mt-1 text-lg text-gray-500">
-          De clic sobre el espacio donde desea estampar su firma
-        </p>
-      </div>
-      <div class="grid grid-cols-1 space-y-1">
-        <label class="font-bold text-gray-500 tracking-wide"
-          >Razón de la firma</label
+  <div class="w-full max-w-xl">
+    @if (option===1) {
+    <app-title
+      label="Firmar documento"
+      description="El documento a firmar debe estar en formato .pdf"
+    />
+    <div class="mt-2 w-full p-4 bg-white rounded-b-lg shadow">
+      <form [formGroup]="signerForm" class="space-y-2">
+        <div class="grid grid-cols-1">
+          <label class="font-semibold text-gray-500 text-sm"
+            >Ingrese la cédula de la persona a firmar</label
+          >
+          <input formControlName="cedula" />
+          <span class="text-slate-400 text-xs"
+            >Ingrese el número de cédula sin el "-".</span
+          >
+        </div>
+        <div class="grid grid-cols-1">
+          <label class="font-semibold text-gray-500 text-sm mb-1"
+            >Seleccione el documento a ser firmado</label
+          >
+          <app-upload (onUpload)="upload($event)" />
+        </div>
+
+        <div
+          class="w-full rounded bg-green-300 border-green-500 border text-xs py-2 px-4"
         >
-        <input
-          class="text-sm border h-8 px-2 border-gray-300 rounded focus:outline-none focus:border-blue-500"
-        />
-      </div>
+          <span>- No subir archivos que superen los 5MB</span> <br />
+          <span>- Se debe subir solo archivos en formato A4</span>
+        </div>
+
+        <button
+          type="button"
+          [disabled]="signerForm.invalid"
+          (click)="onSigner()"
+          class="btn-primary mt-2"
+        >
+          Firmar
+        </button>
+
+        {{ signerForm.invalid }}
+        {{ signerForm.value | json }}
+      </form>
     </div>
-    <app-stamp-signature #signatureView [pdf]="pdfSrc" />
+
+    }@else if (option ===2) {
+    <app-title
+      label="Firmar documento"
+      description="De clic sobre el espacio donde desea estampar su firma"
+    />
+    <div class="grid bg-white mb-2 p-4 grid-cols-1 space-y-1 shadow">
+      <label class="font-bold text-sm text-gray-500 tracking-wide"
+        >Razón de la firma</label
+      >
+      <input />
+    </div>
+    <button (click)="signer()" class="btn-primary mb-2">Estampar firma</button>
+    <app-stamp-signature
+      (onSignerPosition)="onPosition($event)"
+      #signatureView
+      [pdf]="pdfSrc"
+    />
+    }@else {
+    <app-title
+      label="Documento Firmado"
+      description="De clic sobre el espacio donde desea estampar su firma"
+    />
 
     <button
-      class="py-2 w-full bg-blue-700 text-center rounded-lg mt-3 hover:bg-blue-600"
+      class="btn btn-primary"
+      id="btn-dowload"
+      [disabled]="signerForm.enable"
+      onclick="downloadDocument()"
     >
-      <p class="text-white font-bold">Estampar firma</p>
+      Descargar
     </button>
-  </div>
-  }@else {
-  <div class="max-w-3xl w-full p-4 bg-white rounded-t-lg">
-    <div class="text-center">
-      <h2 class="text-2xl font-bold text-gray-900">Firmar documento</h2>
-      <p class="mt-1 text-gray-500">
-        El documento a firmar debe estar en formato .pdf
-      </p>
-    </div>
-  </div>
-  <div class="sm:max-w-3xl mt-2 w-full p-10 bg-white rounded-b-lg">
-    <form [formGroup]="signerForm" class="space-y-3">
-      <div class="grid grid-cols-1">
-        <label class="font-semibold text-gray-500 text-sm"
-          >Ingrese la cédula de la persona a firmar</label
-        >
-        <input
-          class="text-sm h-8 px-2 mt-1 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-          formControlName="cedula"
-        />
-        <span class="text-slate-400 text-xs"
-          >Ingrese el número de cédula sin el "-".</span
-        >
-      </div>
-      <div class="grid grid-cols-1 space-y-1">
-        <label class="font-semibold text-gray-500 text-sm"
-          >Seleccione el documento a ser firmado</label
-        >
-        <div class="flex items-center justify-center w-full">
-          <label
-            class="cursor-pointer flex flex-col rounded-lg border-indigo-200 border-2 border-dotted w-full h-30 p-10 group text-center"
-          >
-            <div
-              class="h-full w-full text-center flex flex-col items-center justify-center"
-            >
-              <p class="text-gray-500">seleccione un archivo</p>
-            </div>
-            <input
-              type="file"
-              #inputFile
-              class="hidden"
-              (change)="upload($event)"
-            />
-          </label>
-        </div>
-      </div>
 
-      <div class="w-full rounded bg-blue-300 text-xs py-2 px-4">
-        <span>- No subir archivos que superen los 5MB</span> <br />
-        <span>- Se debe subir solo archivos en formato A4</span>
-      </div>
-
-      <button
-        type="button"
-        (click)="onSigner()"
-        class="py-2 w-full bg-blue-700 text-center rounded-lg mt-3 hover:bg-blue-600 text-white uppercase font-semibold"
-      >
-        Firmar
-      </button>
-    </form>
+    }
   </div>
-  }
 </div>
