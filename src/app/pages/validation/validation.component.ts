@@ -16,13 +16,14 @@ export default class ValidationComponent {
   @ViewChild('upload') upload!: UploadComponent;
   private _firmaEcService = inject(FirmaecService);
   private _toastr = inject(ToastrService);
-  signer!: FirmaValido;
+  signer!: FirmaValido | undefined;
   base64!: string | undefined;
   isLoading = false;
 
   activeIndex: number | null = null;
 
   onUpload(file: File) {
+    this.signer = undefined;
     if (file) {
       this.pdftobase64(file);
       return;
@@ -77,6 +78,7 @@ export default class ValidationComponent {
 
   reset() {
     this.base64 = undefined;
+    this.signer = undefined;
     this.upload.reset();
   }
 }

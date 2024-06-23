@@ -38,7 +38,7 @@ export default class HomeComponent {
   archivos: Documents[] = [];
 
   signerForm: FormGroup = this._formBuilder.group({
-    cedula: ['0503733222', [Validators.required]],
+    cedula: ['', [Validators.required]],
     file: [null, Validators.required],
   });
 
