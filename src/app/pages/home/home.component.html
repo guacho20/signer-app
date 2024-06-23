@@ -20,7 +20,7 @@
           <label class="font-semibold text-gray-500 text-sm mb-1"
             >Seleccione el documento a ser firmado</label
           >
-          <app-upload (onUpload)="upload($event)" />
+          <app-upload (onUpload)="onUpload($event)" />
         </div>
 
         <div
@@ -38,9 +38,6 @@
         >
           Firmar
         </button>
-
-        {{ signerForm.invalid }}
-        {{ signerForm.value | json }}
       </form>
     </div>
 
@@ -49,13 +46,29 @@
       label="Firmar documento"
       description="De clic sobre el espacio donde desea estampar su firma"
     />
+
+    <div class="flex gap-x-2 mb-2">
+      <button
+        (click)="signer()"
+        type="button"
+        class="flex justify-center items-center btn-primary"
+      >
+        <span> Estampar firma </span>
+      </button>
+      <button
+        (click)="reset()"
+        type="button"
+        class="flex justify-center items-center btn-default"
+      >
+        <span> Restablecer </span>
+      </button>
+    </div>
     <div class="grid bg-white mb-2 p-4 grid-cols-1 space-y-1 shadow">
       <label class="font-bold text-sm text-gray-500 tracking-wide"
         >Razón de la firma</label
       >
       <input />
     </div>
-    <button (click)="signer()" class="btn-primary mb-2">Estampar firma</button>
     <app-stamp-signature
       (onSignerPosition)="onPosition($event)"
       #signatureView

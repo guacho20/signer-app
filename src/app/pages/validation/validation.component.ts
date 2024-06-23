@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { UploadComponent } from '@components/index';
 import { FirmaValido } from '@models/signer.model';
 import { FirmaecService } from '@service/firmaec.service';
@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './validation.component.html',
 })
 export default class ValidationComponent {
+  @ViewChild('upload') upload!: UploadComponent;
   private _firmaEcService = inject(FirmaecService);
   private _toastr = inject(ToastrService);
   signer!: FirmaValido;
@@ -21,7 +22,7 @@ export default class ValidationComponent {
 
   activeIndex: number | null = null;
 
-  upload(file: File) {
+  onUpload(file: File) {
     if (file) {
       this.pdftobase64(file);
       return;
@@ -72,5 +73,10 @@ export default class ValidationComponent {
 
   toggle(index: number): void {
     this.activeIndex = this.activeIndex === index ? null : index;
+  }
+
+  reset() {
+    this.base64 = undefined;
+    this.upload.reset();
   }
 }

@@ -208,7 +208,11 @@ input {
 }
 
 .btn-primary {
-  @apply py-2 w-full text-sm bg-[#0d4798] text-center rounded-md hover:bg-[#0d4798]/95 hover:disabled:bg-[#0d4798] text-white uppercase;
+  @apply py-2 w-full text-sm bg-[#0d4798] text-center rounded-md hover:bg-[#0d4798]/95 hover:disabled:bg-[#0d4798] text-white;
+}
+
+.btn-default {
+  @apply py-2 w-full text-sm bg-gray-500 text-center rounded-md hover:bg-gray-500/95 hover:disabled:bg-gray-500 text-white;
 }
 
 .btn-icon {

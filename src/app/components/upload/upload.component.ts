@@ -23,4 +23,8 @@ export class UploadComponent {
   clear() {
     (this.file = undefined), this.onUpload.emit(this.file);
   }
+
+  reset() {
+    this.file = undefined;
+  }
 }

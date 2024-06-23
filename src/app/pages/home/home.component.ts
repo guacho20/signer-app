@@ -1,5 +1,5 @@
 import { JsonPipe, NgIf } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -26,6 +26,7 @@ import { FirmaecService } from '../../services/firmaec.service';
   templateUrl: './home.component.html',
 })
 export default class HomeComponent {
+  @ViewChild('upload') upload!: UploadComponent;
   private _formBuilder = inject(FormBuilder);
   private _firmaEcService = inject(FirmaecService);
   private _toastr = inject(ToastrService);
@@ -41,7 +42,7 @@ export default class HomeComponent {
     file: [null, Validators.required],
   });
 
-  upload(file: File) {
+  onUpload(file: File) {
     if (file) {
       this.pdfSrc = URL.createObjectURL(file);
       console.log(file, this.pdfSrc);
@@ -130,5 +131,11 @@ export default class HomeComponent {
     ); */
     //this.option = 3;
     //this.canSigner = !this.canSigner;
+  }
+
+  reset() {
+    this.signerForm.reset();
+    //this.upload.reset();
+    this.option = 1;
   }
 }
